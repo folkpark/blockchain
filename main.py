@@ -31,7 +31,7 @@ def clientThread():
     if nodeName == 'node1':
         clientsocket.connect((ip_dict.get('node2'), 8089))
     elif nodeName == 'node2':
-        clientsocket.connect((ip_dict.get('node1')),8089)
+        clientsocket.connect((ip_dict.get('node1'), 8089))
     clientsocket.send('Ah dude Parker kills it')
 
 if __name__ == "__main__":
