@@ -16,7 +16,7 @@ def serverThread():
     if nodeName == 'node1':
         serversocket.bind((ip_dict.get('node1'), 8089))
     elif nodeName == 'node2':
-        serversocket.bind((ip_dict.get('node2'), 8089))
+        serversocket.bind((ip_dict.get('node2'), 8090))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
 
     while True:
@@ -30,7 +30,7 @@ def serverThread():
 def clientThread():
     clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
-        clientsocket.connect((ip_dict.get('node2'), 8090))
+        clientsocket.connect((ip_dict.get('node2'), 8089))
     elif nodeName == 'node2':
         clientsocket.connect((ip_dict.get('node1'), 8090))
 
