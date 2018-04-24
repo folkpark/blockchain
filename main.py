@@ -15,6 +15,7 @@ def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
         # serversocket.bind((ip_dict.get('node1'), 8089))
+        print()
     elif nodeName == 'node2':
         serversocket.bind((ip_dict.get('node2'), 8090))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
