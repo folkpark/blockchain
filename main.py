@@ -30,9 +30,9 @@ def serverThread():
 def clientThread():
     clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
-        clientsocket.connect((ip_dict.get('node2'), 8089))
+        clientsocket.connect((ip_dict.get('node2'), 8090))
     elif nodeName == 'node2':
-        clientsocket.connect((ip_dict.get('node1'), 8090))
+        clientsocket.connect((ip_dict.get('node1'), 8089))
 
     p = pickle.dumps('Ah dude Parker kills it')
     clientsocket.send(p)
