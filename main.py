@@ -23,7 +23,8 @@ def serverThread():
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
         if len(buf) > 0:
-            print("Read [%s] from buffer",buf)
+            msg = pickle.load(buf)
+            print("Read [%s] from buffer",msg)
             break
 
 def clientThread():
@@ -32,7 +33,9 @@ def clientThread():
         clientsocket.connect((ip_dict.get('node2'), 8089))
     elif nodeName == 'node2':
         clientsocket.connect((ip_dict.get('node1'), 8089))
-    clientsocket.send('Ah dude Parker kills it')
+
+    p = pickle.dumps('Ah dude Parker kills it')
+    clientsocket.send(p)
 
 if __name__ == "__main__":
     print("hello world")
