@@ -9,13 +9,13 @@ import threading
 import time
 import sys
 import pickle
+import block
 
 
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
         serversocket.bind((ip_dict.get('node1'), 5000))
-        print()
     elif nodeName == 'node2':
         serversocket.bind((ip_dict.get('node2'), 5000))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
@@ -35,11 +35,11 @@ def clientThread():
     elif nodeName == 'node2':
         clientsocket.connect((ip_dict.get('node1'), 5000))
 
-    p = pickle.dumps('Ah dude Parker kills it')
+    newBlock = block.Block(4)
+    p = pickle.dumps(newBlock)
     clientsocket.send(p)
 
 if __name__ == "__main__":
-    print("hello world")
     threads = []
     nodeName = sys.argv[1]
     ip = ''
