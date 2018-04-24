@@ -14,7 +14,7 @@ import pickle
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
-        serversocket.bind((ip_dict.get('node1'), 8089))
+        # serversocket.bind((ip_dict.get('node1'), 8089))
     elif nodeName == 'node2':
         serversocket.bind((ip_dict.get('node2'), 8090))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
@@ -24,7 +24,7 @@ def serverThread():
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            print("Read [%s] from buffer",msg)
+            print("Read [%s] from buffer" %(msg))
             break
 
 def clientThread():
