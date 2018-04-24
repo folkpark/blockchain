@@ -14,10 +14,10 @@ import pickle
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
-        # serversocket.bind((ip_dict.get('node1'), 8089))
+        serversocket.bind((ip_dict.get('node1'), 5000))
         print()
     elif nodeName == 'node2':
-        serversocket.bind((ip_dict.get('node2'), 8090))
+        serversocket.bind((ip_dict.get('node2'), 5000))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
 
     while True:
@@ -31,9 +31,9 @@ def serverThread():
 def clientThread():
     clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
-        clientsocket.connect((ip_dict.get('node2'), 8090))
+        clientsocket.connect((ip_dict.get('node2'), 5000))
     elif nodeName == 'node2':
-        clientsocket.connect((ip_dict.get('node1'), 8089))
+        clientsocket.connect((ip_dict.get('node1'), 5000))
 
     p = pickle.dumps('Ah dude Parker kills it')
     clientsocket.send(p)
@@ -55,5 +55,6 @@ if __name__ == "__main__":
     clientThread = threading.Thread(target=clientThread)
     threads.append(clientThread)
     serverThread.start()
+    time.sleep(1)  # let the server thread have time to start
     clientThread.start()
     time.sleep(2)  # wait two seconds for the connections to be made.
