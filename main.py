@@ -23,16 +23,16 @@ def serverThread():
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
         if len(buf) > 0:
-            msg = pickle.load(buf)
+            msg = pickle.loads(buf)
             print("Read [%s] from buffer",msg)
             break
 
 def clientThread():
     clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
-        clientsocket.connect((ip_dict.get('node2'), 8089))
+        clientsocket.connect((ip_dict.get('node2'), 8090))
     elif nodeName == 'node2':
-        clientsocket.connect((ip_dict.get('node1'), 8089))
+        clientsocket.connect((ip_dict.get('node1'), 8090))
 
     p = pickle.dumps('Ah dude Parker kills it')
     clientsocket.send(p)
