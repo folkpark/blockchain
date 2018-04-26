@@ -24,8 +24,7 @@ def serverThread():
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
         if len(buf) > 0:
-            f = serversocket.makefile('rb',4096)
-            msg = pickle.load(f)
+            msg = pickle.loads(buf)
             print("Read [%s] from buffer" %(msg))
             print()
             break
@@ -37,10 +36,9 @@ def clientThread():
     elif nodeName == 'node2':
         clientsocket.connect((ip_dict.get('node1'), 5000))
 
-    newBlock = block.Block(45)
-    f = clientsocket.makefile('wb', 4096)
-    pickle.dump(newBlock, f, pickle.HIGHEST_PROTOCOL)
-    f.close()
+    newBlock = block.Block(4)
+    p = pickle.dumps(newBlock.blockNumber)
+    clientsocket.send(p)
 
 if __name__ == "__main__":
     threads = []
