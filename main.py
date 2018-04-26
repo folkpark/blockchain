@@ -17,11 +17,11 @@ def serverThread():
     if nodeName == 'node1':
         serversocket.bind((ip_dict.get('node1'), 5000))
     elif nodeName == 'node2':
-        serversocket.bind((ip_dict.get('node2'), 5000))
+        serversocket.bind((ip_dict.get('node2'), 5001))
     elif nodeName == 'node3':
-        serversocket.bind((ip_dict.get('node3'), 5000))
+        serversocket.bind((ip_dict.get('node3'), 5002))
     elif nodeName == 'node4':
-        serversocket.bind((ip_dict.get('node4'), 5000))
+        serversocket.bind((ip_dict.get('node4'), 5003))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
 
     while True:
@@ -40,16 +40,16 @@ def clientThread():
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
         clientsocket1.connect((ip_dict.get('node2'), 5000))
-        clientsocket2.connect((ip_dict.get('node3'), 5001))
-        clientsocket3.connect((ip_dict.get('node4'), 5002))
+        clientsocket2.connect((ip_dict.get('node3'), 5002))
+        clientsocket3.connect((ip_dict.get('node4'), 5003))
     elif nodeName == 'node2':
         clientsocket1.connect((ip_dict.get('node1'), 5000))
-        clientsocket2.connect((ip_dict.get('node3'), 5001))
-        clientsocket3.connect((ip_dict.get('node4'), 5002))
+        clientsocket2.connect((ip_dict.get('node3'), 5002))
+        clientsocket3.connect((ip_dict.get('node4'), 5003))
     elif nodeName == 'node3':
         clientsocket1.connect((ip_dict.get('node1'), 5000))
         clientsocket2.connect((ip_dict.get('node2'), 5001))
-        clientsocket3.connect((ip_dict.get('node4'), 5002))
+        clientsocket3.connect((ip_dict.get('node4'), 5003))
     elif nodeName == 'node4':
         clientsocket1.connect((ip_dict.get('node1'), 5000))
         clientsocket2.connect((ip_dict.get('node2'), 5001))
