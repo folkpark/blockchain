@@ -29,7 +29,7 @@ def serverThread():
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            # print(type(msg))
+            print(type(msg))
             print("Read [%s] from buffer" %(msg))
             print()
 
