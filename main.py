@@ -39,7 +39,7 @@ def clientThread():
     clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
-        clientsocket1.connect((ip_dict.get('node2'), 5000))
+        clientsocket1.connect((ip_dict.get('node2'), 5001))
         clientsocket2.connect((ip_dict.get('node3'), 5002))
         clientsocket3.connect((ip_dict.get('node4'), 5003))
     elif nodeName == 'node2':
@@ -56,7 +56,7 @@ def clientThread():
         clientsocket3.connect((ip_dict.get('node3'), 5002))
 
     newBlock = block.Block(45)
-    p = pickle.dumps(newBlock.blockNumber)
+    p = pickle.dumps("From: %s" %(nodeName))
     clientsocket1.send(p)
     clientsocket2.send(p)
     clientsocket3.send(p)
