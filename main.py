@@ -24,8 +24,10 @@ def serverThread():
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
         if len(buf) > 0:
-            with open("block.p", 'rb') as file:
-                msg = pickle.load(file)
+            file = open("block.p", 'rb')
+            msg = pickle.load(file)
+            file.close()
+
             print("Read [%s] from buffer" %(msg))
             print()
             break
@@ -38,8 +40,9 @@ def clientThread():
         clientsocket.connect((ip_dict.get('node1'), 5000))
 
     newBlock = block.Block(4)
-    with open("block.p", 'wb') as file:
-        p = pickle.dump(newBlock, file)
+    file = open("block.p", 'wb')
+    p = pickle.dump(newBlock, file)
+    file.close()
 
     clientsocket.send(p)
 
