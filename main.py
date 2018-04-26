@@ -18,10 +18,10 @@ def serverThread():
         serversocket.bind((ip_dict.get('node1'), 5000))
     elif nodeName == 'node2':
         serversocket.bind((ip_dict.get('node2'), 5000))
-    # elif nodeName == 'node3':
-    #     serversocket.bind((ip_dict.get('node3'), 5000))
-    # elif nodeName == 'node4':
-    #     serversocket.bind((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node3':
+        serversocket.bind((ip_dict.get('node3'), 5000))
+    elif nodeName == 'node4':
+        serversocket.bind((ip_dict.get('node4'), 5000))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
 
     while True:
@@ -32,7 +32,6 @@ def serverThread():
             # print(type(msg))
             print("Read [%s] from buffer" %(msg))
             print()
-            break
 
 def clientThread():
     clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -40,26 +39,26 @@ def clientThread():
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
         clientsocket1.connect((ip_dict.get('node2'), 5000))
-        # clientsocket2.connect((ip_dict.get('node3'), 5000))
-        # clientsocket3.connect((ip_dict.get('node4'), 5000))
+        clientsocket2.connect((ip_dict.get('node3'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
     elif nodeName == 'node2':
         clientsocket1.connect((ip_dict.get('node1'), 5000))
-        # clientsocket2.connect((ip_dict.get('node3'), 5000))
-        # clientsocket3.connect((ip_dict.get('node4'), 5000))
-    # elif nodeName == 'node3':
-    #     clientsocket1.connect((ip_dict.get('node1'), 5000))
-    #     clientsocket2.connect((ip_dict.get('node2'), 5000))
-    #     clientsocket3.connect((ip_dict.get('node4'), 5000))
-    # elif nodeName == 'node4':
-    #     clientsocket1.connect((ip_dict.get('node1'), 5000))
-    #     clientsocket2.connect((ip_dict.get('node2'), 5000))
-    #     clientsocket3.connect((ip_dict.get('node3'), 5000))
+        clientsocket2.connect((ip_dict.get('node3'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node3':
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node4':
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5000))
+        clientsocket3.connect((ip_dict.get('node3'), 5000))
 
     newBlock = block.Block(45)
     p = pickle.dumps("From: %s" %(nodeName))
     clientsocket1.send(p)
-    # clientsocket2.send(p)
-    # clientsocket3.send(p)
+    clientsocket2.send(p)
+    clientsocket3.send(p)
 
 if __name__ == "__main__":
     threads = []
