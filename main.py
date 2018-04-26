@@ -40,20 +40,20 @@ def clientThread():
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
         clientsocket1.connect((ip_dict.get('node2'), 5000))
-        clientsocket2.connect((ip_dict.get('node3'), 5000))
-        clientsocket3.connect((ip_dict.get('node4'), 5000))
+        clientsocket2.connect((ip_dict.get('node3'), 5001))
+        clientsocket3.connect((ip_dict.get('node4'), 5002))
     elif nodeName == 'node2':
         clientsocket1.connect((ip_dict.get('node1'), 5000))
-        clientsocket2.connect((ip_dict.get('node3'), 5000))
-        clientsocket3.connect((ip_dict.get('node4'), 5000))
+        clientsocket2.connect((ip_dict.get('node3'), 5001))
+        clientsocket3.connect((ip_dict.get('node4'), 5002))
     elif nodeName == 'node3':
         clientsocket1.connect((ip_dict.get('node1'), 5000))
-        clientsocket2.connect((ip_dict.get('node2'), 5000))
-        clientsocket3.connect((ip_dict.get('node4'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5001))
+        clientsocket3.connect((ip_dict.get('node4'), 5002))
     elif nodeName == 'node4':
         clientsocket1.connect((ip_dict.get('node1'), 5000))
-        clientsocket2.connect((ip_dict.get('node2'), 5000))
-        clientsocket3.connect((ip_dict.get('node3'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5001))
+        clientsocket3.connect((ip_dict.get('node3'), 5002))
 
     newBlock = block.Block(45)
     p = pickle.dumps(newBlock.blockNumber)
