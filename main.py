@@ -56,6 +56,5 @@ if __name__ == "__main__":
     clientThread = threading.Thread(target=clientThread)
     threads.append(clientThread)
     serverThread.start()
-    time.sleep(1)  # let the server thread have time to start
+    time.sleep(2)  # let the server thread have time to start
     clientThread.start()
-    time.sleep(2)  # wait two seconds for the connections to be made.
