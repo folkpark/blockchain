@@ -48,10 +48,38 @@ def serverThread():
         if len(buf) > 0:
             msg = pickle.loads(buf)
             print("Read [%s] from buffer" %(msg))
+            serverSendToAll(msg)
             print()
 # End Server thread
 
-def sendToAll():
+def serverSendToAll(msg):
+    clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    if nodeName == 'node1':
+        clientsocket1.connect((ip_dict.get('node2'), 5000))
+        clientsocket2.connect((ip_dict.get('node3'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node2':
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node3'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node3':
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node4':
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5000))
+        clientsocket3.connect((ip_dict.get('node3'), 5000))
+
+    p = pickle.dumps(msg)
+    clientsocket1.send(p)
+    clientsocket2.send(p)
+    clientsocket3.send(p)
+
+def clientSendToAll(transaction):
     clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -73,9 +101,7 @@ def clientThread():
     clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # clientsocket1.setblocking(0)
-    # clientsocket2.setblocking(0)
-    # clientsocket3.setblocking(0)
+
     if nodeName == 'node1':
         clientsocket1.connect((ip_dict.get('node2'), 5000))
         clientsocket2.connect((ip_dict.get('node3'), 5000))
@@ -135,7 +161,6 @@ if __name__ == "__main__":
         time.sleep(2)  # let the server thread have time to start on all nodes
         clientThread.start()
     else:
-
         while True:
             print("Enter integer selection (q to quit)")
             print("Create Transaction 1:")
@@ -144,7 +169,8 @@ if __name__ == "__main__":
 
             if n is '1':
                 print()
-                sendToAll()
+                transaction = "This a test transaction"
+                clientSendToAll(transaction)
             elif n is '2':
                 print("Kindly print the blockchain")
             elif n is 'q':
