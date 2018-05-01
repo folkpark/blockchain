@@ -76,22 +76,22 @@ def clientThread():
         clientsocket3.connect((ip_dict.get('node3'), 5000))
         clientsocket4.connect((ip_dict.get('node4'), 5000))
 
-    while True:
-        print("Enter integer selection (q to quit)")
-        print("Create Transaction 1:")
-        print("View Blockchain 2:")
-        n = input("Please enter selection: ")
-
-        if n is '1':
-            print()
-            p = pickle.dumps("From: %s" %(nodeName))
-            clientsocket1.send(p)
-            clientsocket2.send(p)
-            clientsocket3.send(p)
-        elif n is '2':
-            print("Kindly print the blockchain")
-        elif n is 'q':
-            break
+    # while True:
+    #     print("Enter integer selection (q to quit)")
+    #     print("Create Transaction 1:")
+    #     print("View Blockchain 2:")
+    #     n = input("Please enter selection: ")
+    #
+    #     if n is '1':
+    #         print()
+    #         p = pickle.dumps("From: %s" %(nodeName))
+    #         clientsocket1.send(p)
+    #         clientsocket2.send(p)
+    #         clientsocket3.send(p)
+    #     elif n is '2':
+    #         print("Kindly print the blockchain")
+    #     elif n is 'q':
+    #         break
 
     # p = pickle.dumps("From: %s" %(nodeName))
     # clientsocket1.send(p)
