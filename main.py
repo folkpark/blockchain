@@ -31,7 +31,7 @@ def signBlock(sign_str):
 
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    serversocket.setblocking(0)
+    # serversocket.setblocking(0)
     if nodeName == 'node1':
         serversocket.bind((ip_dict.get('node1'), 5000))
     elif nodeName == 'node2':
@@ -50,6 +50,23 @@ def serverThread():
             print("Read [%s] from buffer" %(msg))
             print()
 # End Server thread
+
+def sendToAll():
+    clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    clientsocket1.connect((ip_dict.get('node1'), 5000))
+    clientsocket2.connect((ip_dict.get('node2'), 5000))
+    clientsocket3.connect((ip_dict.get('node3'), 5000))
+    clientsocket4.connect((ip_dict.get('node4'), 5000))
+
+    p = pickle.dumps("First From: %s" % (nodeName))
+    clientsocket1.send(p)
+    clientsocket2.send(p)
+    clientsocket3.send(p)
+    clientsocket4.send(p)
 
 #Client Thread
 def clientThread():
@@ -118,20 +135,6 @@ if __name__ == "__main__":
         time.sleep(2)  # let the server thread have time to start on all nodes
         clientThread.start()
     else:
-        clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        clientsocket4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        clientsocket1.connect((ip_dict.get('node1'), 5000))
-        clientsocket2.connect((ip_dict.get('node2'), 5000))
-        clientsocket3.connect((ip_dict.get('node3'), 5000))
-        clientsocket4.connect((ip_dict.get('node4'), 5000))
-
-        # clientsocket1.setblocking(0)
-        # clientsocket2.setblocking(0)
-        # clientsocket3.setblocking(0)
-        # clientsocket4.setblocking(0)
 
         while True:
             print("Enter integer selection (q to quit)")
@@ -141,15 +144,7 @@ if __name__ == "__main__":
 
             if n is '1':
                 print()
-                p = pickle.dumps("First From: %s" % (nodeName))
-                clientsocket1.send(p)
-                p = pickle.dumps("Second From: %s" % (nodeName))
-                clientsocket1.send(p)
-                p = pickle.dumps("Third From: %s" % (nodeName))
-                clientsocket1.send(p)
-                clientsocket1.send(p)
-                clientsocket2.send(p)
-                clientsocket3.send(p)
+                sendToAll()
             elif n is '2':
                 print("Kindly print the blockchain")
             elif n is 'q':
