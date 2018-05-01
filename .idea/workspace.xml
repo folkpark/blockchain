@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="db07c69f-dbf6-42db-a18c-9c3eeb780e45" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-    </list>
+    <list default="true" id="db07c69f-dbf6-42db-a18c-9c3eeb780e45" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,13 +15,13 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
-              <caret line="78" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="93" selection-end-column="19" />
+            <state relative-caret-position="896">
+              <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="98" selection-end-column="25" />
               <folding>
                 <element signature="e#49#62#0" expanded="true" />
                 <element signature="e#2040#2211#0" expanded="false" />
                 <element signature="e#2250#2421#0" expanded="false" />
-                <marker date="1525198430718" expanded="false" signature="2452:2692" ph="..." />
+                <element signature="e#2461#2692#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -263,7 +261,7 @@
             <element signature="e#49#62#0" expanded="true" />
             <element signature="e#2040#2211#0" expanded="false" />
             <element signature="e#2250#2421#0" expanded="false" />
-            <marker date="1525198430718" expanded="false" signature="2452:2692" ph="..." />
+            <element signature="e#2461#2692#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -284,7 +282,7 @@
             <element signature="e#49#62#0" expanded="true" />
             <element signature="e#2040#2211#0" expanded="false" />
             <element signature="e#2250#2421#0" expanded="false" />
-            <marker date="1525198430718" expanded="false" signature="2452:2692" ph="..." />
+            <element signature="e#2461#2692#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -307,13 +305,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="78" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="93" selection-end-column="19" />
+        <state relative-caret-position="896">
+          <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="98" selection-end-column="25" />
           <folding>
             <element signature="e#49#62#0" expanded="true" />
             <element signature="e#2040#2211#0" expanded="false" />
             <element signature="e#2250#2421#0" expanded="false" />
-            <marker date="1525198430718" expanded="false" signature="2452:2692" ph="..." />
+            <element signature="e#2461#2692#0" expanded="false" />
           </folding>
         </state>
       </provider>

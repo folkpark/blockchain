@@ -93,10 +93,10 @@ def clientThread():
     #     elif n is 'q':
     #         break
 
-    # p = pickle.dumps("From: %s" %(nodeName))
-    # clientsocket1.send(p)
-    # clientsocket2.send(p)
-    # clientsocket3.send(p)
+    p = pickle.dumps("From: %s" %(nodeName))
+    clientsocket1.send(p)
+    clientsocket2.send(p)
+    clientsocket3.send(p)
 
 if __name__ == "__main__":
     threads = []
