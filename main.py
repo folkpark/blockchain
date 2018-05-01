@@ -30,30 +30,19 @@ def signBlock(sign_str):
 #
 
 def serverThread():
-    # serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # # serversocket.setblocking(0)
-    # if nodeName == 'node1':
-    #     serversocket.bind((ip_dict.get('node1'), 5000))
-    # elif nodeName == 'node2':
-    #     serversocket.bind((ip_dict.get('node2'), 5000))
-    # elif nodeName == 'node3':
-    #     serversocket.bind((ip_dict.get('node3'), 5000))
-    # elif nodeName == 'node4':
-    #     serversocket.bind((ip_dict.get('node4'), 5000))
-    # serversocket.listen(5)  # server socket maximum 5 connections
+    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # serversocket.setblocking(0)
+    if nodeName == 'node1':
+        serversocket.bind((ip_dict.get('node1'), 5000))
+    elif nodeName == 'node2':
+        serversocket.bind((ip_dict.get('node2'), 5000))
+    elif nodeName == 'node3':
+        serversocket.bind((ip_dict.get('node3'), 5000))
+    elif nodeName == 'node4':
+        serversocket.bind((ip_dict.get('node4'), 5000))
+    serversocket.listen(5)  # server socket maximum 5 connections
 
     while True:
-        serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # serversocket.setblocking(0)
-        if nodeName == 'node1':
-            serversocket.bind((ip_dict.get('node1'), 5000))
-        elif nodeName == 'node2':
-            serversocket.bind((ip_dict.get('node2'), 5000))
-        elif nodeName == 'node3':
-            serversocket.bind((ip_dict.get('node3'), 5000))
-        elif nodeName == 'node4':
-            serversocket.bind((ip_dict.get('node4'), 5000))
-        serversocket.listen(5)  # server socket maximum 5 connections
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
         if len(buf) > 0:
@@ -106,6 +95,12 @@ def clientSendToAll(transaction):
     clientsocket2.send(p)
     clientsocket3.send(p)
     clientsocket4.send(p)
+
+def send(transaction):
+    clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket1.connect((ip_dict.get('node1'), 5000))
+    p = pickle.dumps(transaction)
+    clientsocket1.send(p)
 
 #Client Thread
 def clientThread():
@@ -181,7 +176,7 @@ if __name__ == "__main__":
             if n is '1':
                 print()
                 transaction = "This a test transaction"
-                clientSendToAll(transaction)
+                send(transaction)
             elif n is '2':
                 print("Kindly print the blockchain")
             elif n is 'q':
