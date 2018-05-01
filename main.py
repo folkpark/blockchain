@@ -31,7 +31,7 @@ def createTransaction():
     spender = input("Who is spending?: ")
     receiver = input("Who is receiving?: ")
     amount = input("What is the amount?: ")
-    transaction = ("trans:%s:%s:%s" % (spender,receiver,amount))
+    transaction = "trans:%s:%s:%s" % (spender,receiver,amount)
     return transaction
 
 def getTurn():
