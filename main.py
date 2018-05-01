@@ -30,19 +30,30 @@ def signBlock(sign_str):
 #
 
 def serverThread():
-    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # serversocket.setblocking(0)
-    if nodeName == 'node1':
-        serversocket.bind((ip_dict.get('node1'), 5000))
-    elif nodeName == 'node2':
-        serversocket.bind((ip_dict.get('node2'), 5000))
-    elif nodeName == 'node3':
-        serversocket.bind((ip_dict.get('node3'), 5000))
-    elif nodeName == 'node4':
-        serversocket.bind((ip_dict.get('node4'), 5000))
-    serversocket.listen(5)  # server socket maximum 5 connections
+    # serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # # serversocket.setblocking(0)
+    # if nodeName == 'node1':
+    #     serversocket.bind((ip_dict.get('node1'), 5000))
+    # elif nodeName == 'node2':
+    #     serversocket.bind((ip_dict.get('node2'), 5000))
+    # elif nodeName == 'node3':
+    #     serversocket.bind((ip_dict.get('node3'), 5000))
+    # elif nodeName == 'node4':
+    #     serversocket.bind((ip_dict.get('node4'), 5000))
+    # serversocket.listen(5)  # server socket maximum 5 connections
 
     while True:
+        serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # serversocket.setblocking(0)
+        if nodeName == 'node1':
+            serversocket.bind((ip_dict.get('node1'), 5000))
+        elif nodeName == 'node2':
+            serversocket.bind((ip_dict.get('node2'), 5000))
+        elif nodeName == 'node3':
+            serversocket.bind((ip_dict.get('node3'), 5000))
+        elif nodeName == 'node4':
+            serversocket.bind((ip_dict.get('node4'), 5000))
+        serversocket.listen(5)  # server socket maximum 5 connections
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
         if len(buf) > 0:
