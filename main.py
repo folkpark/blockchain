@@ -31,6 +31,7 @@ def signBlock(sign_str):
 
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    serversocket.setblocking(0)
     if nodeName == 'node1':
         serversocket.bind((ip_dict.get('node1'), 5000))
     elif nodeName == 'node2':
@@ -55,6 +56,9 @@ def clientThread():
     clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket1.setblocking(0)
+    clientsocket2.setblocking(0)
+    clientsocket3.setblocking(0)
     if nodeName == 'node1':
         clientsocket1.connect((ip_dict.get('node2'), 5000))
         clientsocket2.connect((ip_dict.get('node3'), 5000))
@@ -124,25 +128,29 @@ if __name__ == "__main__":
         clientsocket3.connect((ip_dict.get('node3'), 5000))
         clientsocket4.connect((ip_dict.get('node4'), 5000))
 
-        if nodeName is 'client':
-            while True:
-                print("Enter integer selection (q to quit)")
-                print("Create Transaction 1:")
-                print("View Blockchain 2:")
-                n = input("Please enter selection: ")
+        clientsocket1.setblocking(0)
+        clientsocket2.setblocking(0)
+        clientsocket3.setblocking(0)
+        clientsocket4.setblocking(0)
 
-                if n is '1':
-                    print()
-                    p = pickle.dumps("First From: %s" % (nodeName))
-                    clientsocket1.send(p)
-                    p = pickle.dumps("Second From: %s" % (nodeName))
-                    clientsocket1.send(p)
-                    p = pickle.dumps("Third From: %s" % (nodeName))
-                    clientsocket1.send(p)
-                    clientsocket1.send(p)
-                    clientsocket2.send(p)
-                    clientsocket3.send(p)
-                elif n is '2':
-                    print("Kindly print the blockchain")
-                elif n is 'q':
-                    break
+        while True:
+            print("Enter integer selection (q to quit)")
+            print("Create Transaction 1:")
+            print("View Blockchain 2:")
+            n = input("Please enter selection: ")
+
+            if n is '1':
+                print()
+                p = pickle.dumps("First From: %s" % (nodeName))
+                clientsocket1.send(p)
+                p = pickle.dumps("Second From: %s" % (nodeName))
+                clientsocket1.send(p)
+                p = pickle.dumps("Third From: %s" % (nodeName))
+                clientsocket1.send(p)
+                clientsocket1.send(p)
+                clientsocket2.send(p)
+                clientsocket3.send(p)
+            elif n is '2':
+                print("Kindly print the blockchain")
+            elif n is 'q':
+                break
