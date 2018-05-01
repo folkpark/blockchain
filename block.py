@@ -2,10 +2,10 @@
 
 class Block:
 
-    def __init__(self, blockNumber, transactions, timestamp ,previousHash, hash):
+    def __init__(self, blockNumber, transactions, timestamp ,signatures):
         self.blockNumber = blockNumber
         self.transactions = transactions
-        self.previousHash = previousHash
+        self.signatures = signatures
         self.hash = hash
         self.timestamp = timestamp
 
@@ -16,7 +16,7 @@ class Block:
         return self.transactions
 
     def getPrevHash(self):
-        return self.previousHash
+        return self.signatures
 
     def getHash(self):
         return self.hash

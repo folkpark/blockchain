@@ -26,6 +26,9 @@ def signBlock(sign_str):
     hash = hashlib.sha3_256(prehash).hexdigest()
     return hash
 
+# def createTransaction():
+#
+
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
@@ -67,11 +70,23 @@ def clientThread():
         clientsocket2.connect((ip_dict.get('node2'), 5000))
         clientsocket3.connect((ip_dict.get('node3'), 5000))
 
+    while True:
+        print("Enter integer selection (q to quit)")
+        print("Create Transaction 1:")
+        print("View Blockchain 2:")
+        n = input("Please enter selection: ")
 
-    p = pickle.dumps("From: %s" %(nodeName))
-    clientsocket1.send(p)
-    clientsocket2.send(p)
-    clientsocket3.send(p)
+        if n is '1':
+            print("1 was entered")
+        elif n is '2':
+            print("Kindly print the blockchain")
+        elif n is 'q':
+            break
+
+    # p = pickle.dumps("From: %s" %(nodeName))
+    # clientsocket1.send(p)
+    # clientsocket2.send(p)
+    # clientsocket3.send(p)
 
 if __name__ == "__main__":
     threads = []
@@ -97,16 +112,13 @@ if __name__ == "__main__":
     with open('log.txt', 'w'):
         pass
 
-    prehashData = ("Genesis Block Init DATA")
-    prehash = hashlib.sha3_256(prehashData.encode()).hexdigest().encode()
-    hash = hashlib.sha3_256(prehash).hexdigest()
-
     init_transactions = []
+    init_signatures = []
     genesisBlock = Block(0, init_transactions,
                          datetime.datetime.now(),
-                         '0',
-                         hash)
-    blockchain = [genesisBlock]
+                         init_signatures)
+
+    blockchain = [genesisBlock]  # List to store our blockchain
 
     serverThread = threading.Thread(target=serverThread)
     threads.append(serverThread)
