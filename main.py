@@ -196,6 +196,6 @@ if __name__ == "__main__":
                 transaction = "This a test transaction"
                 clientSendToAll(transaction)
             elif n is '2':
-                print("Kindly print the blockchain")
+                printBlockchain()
             elif n is 'q':
                 break
