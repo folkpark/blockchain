@@ -47,10 +47,12 @@ def serverThread():
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            if msg == 'ACK':
-                print("ACK received %s",(msg))
+            if msg == "ACK":
+                print("ACK received %s" % (msg))
             else:
                 print("Read [%s] from buffer" % (msg))
+                #check if its a good transaction
+
                 serverSendToAll("ACK")
 # End Server thread
 
