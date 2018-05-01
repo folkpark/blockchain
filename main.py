@@ -31,7 +31,7 @@ def signBlock(sign_str):
 
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    serversocket.setblocking(0)
+    # serversocket.setblocking(0)
     if nodeName == 'node1':
         serversocket.bind((ip_dict.get('node1'), 5000))
     elif nodeName == 'node2':
@@ -56,9 +56,9 @@ def clientThread():
     clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientsocket1.setblocking(0)
-    clientsocket2.setblocking(0)
-    clientsocket3.setblocking(0)
+    # clientsocket1.setblocking(0)
+    # clientsocket2.setblocking(0)
+    # clientsocket3.setblocking(0)
     if nodeName == 'node1':
         clientsocket1.connect((ip_dict.get('node2'), 5000))
         clientsocket2.connect((ip_dict.get('node3'), 5000))
@@ -128,10 +128,10 @@ if __name__ == "__main__":
         clientsocket3.connect((ip_dict.get('node3'), 5000))
         clientsocket4.connect((ip_dict.get('node4'), 5000))
 
-        clientsocket1.setblocking(0)
-        clientsocket2.setblocking(0)
-        clientsocket3.setblocking(0)
-        clientsocket4.setblocking(0)
+        # clientsocket1.setblocking(0)
+        # clientsocket2.setblocking(0)
+        # clientsocket3.setblocking(0)
+        # clientsocket4.setblocking(0)
 
         while True:
             print("Enter integer selection (q to quit)")
