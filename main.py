@@ -47,9 +47,9 @@ def serverThread():
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            print("Read [%s] from buffer" %(msg))
-            serverSendToAll("Got it")
-            print()
+            if msg != "Got it":
+                print("Read [%s] from buffer" %(msg))
+                serverSendToAll("Got it")
 # End Server thread
 
 def serverSendToAll(msg):
