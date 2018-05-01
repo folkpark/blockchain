@@ -95,6 +95,9 @@ def clientThread():
 
     p = pickle.dumps("From: %s" %(nodeName))
     clientsocket1.send(p)
+    clientsocket1.send(p)
+    clientsocket1.send(p)
+    clientsocket1.send(p)
     clientsocket2.send(p)
     clientsocket3.send(p)
 
