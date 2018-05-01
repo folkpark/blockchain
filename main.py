@@ -41,12 +41,37 @@ def serverThread():
         serversocket.bind((ip_dict.get('node4'), 5000))
     serversocket.listen(5)  # server socket maximum 5 connections
 
+    time.sleep(2)
+
+    clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientsocket4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    if nodeName == 'node1':
+        clientsocket1.connect((ip_dict.get('node2'), 5000))
+        clientsocket2.connect((ip_dict.get('node3'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node2':
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node3'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node3':
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5000))
+        clientsocket3.connect((ip_dict.get('node4'), 5000))
+    elif nodeName == 'node4':
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5000))
+        clientsocket3.connect((ip_dict.get('node3'), 5000))
+
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
             print("Read [%s] from buffer" %(msg))
+            p = pickle.dumps("ACK")
+            clientsocket1.send(p)
             print()
 
 def clientThread():
@@ -103,6 +128,9 @@ def clientThread():
     clientsocket2.send(p)
     clientsocket3.send(p)
 
+    p = pickle.dumps("Last From: %s" % (nodeName))
+    clientsocket1.send(p)
+
 if __name__ == "__main__":
     threads = []
     nodeName = sys.argv[1]
@@ -137,8 +165,8 @@ if __name__ == "__main__":
 
     serverThread = threading.Thread(target=serverThread)
     threads.append(serverThread)
-    clientThread = threading.Thread(target=clientThread)
-    threads.append(clientThread)
+    #clientThread = threading.Thread(target=clientThread)
+    #threads.append(clientThread)
     serverThread.start()
     time.sleep(2)  # let the server thread have time to start on all nodes
-    clientThread.start()
+    #clientThread.start()
