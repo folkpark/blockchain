@@ -55,7 +55,6 @@ def clientThread():
     clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientsocket4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
         clientsocket1.connect((ip_dict.get('node2'), 5000))
         clientsocket2.connect((ip_dict.get('node3'), 5000))
@@ -72,34 +71,6 @@ def clientThread():
         clientsocket1.connect((ip_dict.get('node1'), 5000))
         clientsocket2.connect((ip_dict.get('node2'), 5000))
         clientsocket3.connect((ip_dict.get('node3'), 5000))
-    elif nodeName == 'client':
-        clientsocket1.connect((ip_dict.get('node1'), 5000))
-        clientsocket2.connect((ip_dict.get('node2'), 5000))
-        clientsocket3.connect((ip_dict.get('node3'), 5000))
-        clientsocket4.connect((ip_dict.get('node4'), 5000))
-
-    if nodeName is 'client':
-        while True:
-            print("Enter integer selection (q to quit)")
-            print("Create Transaction 1:")
-            print("View Blockchain 2:")
-            n = input("Please enter selection: ")
-
-            if n is '1':
-                print()
-                p = pickle.dumps("First From: %s" % (nodeName))
-                clientsocket1.send(p)
-                p = pickle.dumps("Second From: %s" % (nodeName))
-                clientsocket1.send(p)
-                p = pickle.dumps("Third From: %s" % (nodeName))
-                clientsocket1.send(p)
-                clientsocket1.send(p)
-                clientsocket2.send(p)
-                clientsocket3.send(p)
-            elif n is '2':
-                print("Kindly print the blockchain")
-            elif n is 'q':
-                break
 
 
 if __name__ == "__main__":
@@ -143,6 +114,35 @@ if __name__ == "__main__":
         time.sleep(2)  # let the server thread have time to start on all nodes
         clientThread.start()
     else:
-        clientThread = threading.Thread(target=clientThread)
-        threads.append(clientThread)
-        clientThread.start()
+        clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientsocket4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        clientsocket1.connect((ip_dict.get('node1'), 5000))
+        clientsocket2.connect((ip_dict.get('node2'), 5000))
+        clientsocket3.connect((ip_dict.get('node3'), 5000))
+        clientsocket4.connect((ip_dict.get('node4'), 5000))
+
+        if nodeName is 'client':
+            while True:
+                print("Enter integer selection (q to quit)")
+                print("Create Transaction 1:")
+                print("View Blockchain 2:")
+                n = input("Please enter selection: ")
+
+                if n is '1':
+                    print()
+                    p = pickle.dumps("First From: %s" % (nodeName))
+                    clientsocket1.send(p)
+                    p = pickle.dumps("Second From: %s" % (nodeName))
+                    clientsocket1.send(p)
+                    p = pickle.dumps("Third From: %s" % (nodeName))
+                    clientsocket1.send(p)
+                    clientsocket1.send(p)
+                    clientsocket2.send(p)
+                    clientsocket3.send(p)
+                elif n is '2':
+                    print("Kindly print the blockchain")
+                elif n is 'q':
+                    break
