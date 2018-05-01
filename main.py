@@ -31,7 +31,7 @@ def signBlock(sign_str):
 
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # serversocket.setblocking(0)
+    serversocket.setblocking(0)
     if nodeName == 'node1':
         serversocket.bind((ip_dict.get('node1'), 5000))
     elif nodeName == 'node2':
