@@ -50,9 +50,9 @@ def serverThread():
         print("Nothing in the buffer")
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            if msg != "Got it":
+            if msg != "ACK":
                 print("Read [%s] from buffer" %(msg))
-                serverSendToAll("Got it")
+                clientSendToAll("ACK")
 # End Server thread
 
 def serverSendToAll(msg):
