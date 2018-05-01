@@ -53,6 +53,7 @@ def serverThread():
             if msg != "ACK":
                 print("Read [%s] from buffer" %(msg))
                 clientSendToAll("ACK")
+
 # End Server thread
 
 def serverSendToAll(msg):
