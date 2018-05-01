@@ -41,7 +41,7 @@ def serverThread():
     elif nodeName == 'node4':
         serversocket.bind((ip_dict.get('node4'), 5000))
     serversocket.listen(5)  # server socket maximum 5 connections
-    serversocket.settimeout(5)
+    serversocket.settimeout(10)
 
     while True:
         connection, address = serversocket.accept()
