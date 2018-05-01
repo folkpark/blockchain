@@ -74,7 +74,7 @@ def serverSendToAll(msg):
         clientsocket2.connect((ip_dict.get('node2'), 5000))
         clientsocket3.connect((ip_dict.get('node3'), 5000))
 
-    p = pickle.dumps(msg)
+    p = pickle.dumps("Received: %s, %s"%(msg,nodeName))
     clientsocket1.send(p)
     clientsocket2.send(p)
     clientsocket3.send(p)
