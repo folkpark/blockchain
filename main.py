@@ -50,6 +50,7 @@ def serverThread():
             if msg != "Got it":
                 print("Read [%s] from buffer" %(msg))
                 serverSendToAll("Got it")
+                time.sleep(1)
 # End Server thread
 
 def serverSendToAll(msg):
