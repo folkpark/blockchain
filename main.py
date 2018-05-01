@@ -45,12 +45,13 @@ def serverThread():
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
+        time.sleep(1)
+        print("Nothing in the buffer")
         if len(buf) > 0:
             msg = pickle.loads(buf)
             if msg != "Got it":
                 print("Read [%s] from buffer" %(msg))
                 serverSendToAll("Got it")
-                time.sleep(1)
 # End Server thread
 
 def serverSendToAll(msg):
