@@ -47,8 +47,10 @@ def serverThread():
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            if msg != 'ACK':
-                print("Read [%s] from buffer" %(msg))
+            if msg == 'ACK':
+                print("ACK received %s",(msg))
+            else:
+                print("Read [%s] from buffer" % (msg))
                 serverSendToAll("ACK")
 # End Server thread
 
@@ -74,7 +76,7 @@ def serverSendToAll(msg):
         clientsocket2.connect((ip_dict.get('node2'), 5000))
         clientsocket3.connect((ip_dict.get('node3'), 5000))
 
-    p = pickle.dumps("Received: %s, %s"%(msg,nodeName))
+    p = pickle.dumps(msg)
     clientsocket1.send(p)
     clientsocket2.send(p)
     clientsocket3.send(p)
