@@ -41,18 +41,15 @@ def serverThread():
     elif nodeName == 'node4':
         serversocket.bind((ip_dict.get('node4'), 5000))
     serversocket.listen(5)  # server socket maximum 5 connections
-    serversocket.settimeout(10)
 
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
-        time.sleep(1)
-        print("Nothing in the buffer")
         if len(buf) > 0:
             msg = pickle.loads(buf)
             if msg != "ACK":
                 print("Read [%s] from buffer" %(msg))
-                # serverSendToAll("ACK")
+                serverSendToAll("ACK")
 # End Server thread
 
 def serverSendToAll(msg):
