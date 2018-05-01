@@ -7,10 +7,24 @@ Date: 4/24/2018
 import socket
 import threading
 import time
+import datetime
 import sys
+import hashlib
 import pickle
-import block
+from block import Block
 
+def writeToLog(logEntry):
+    file = open("log.txt", "a")
+    #write the log out to a file
+    file.write('\n')
+    file.write(logEntry)
+    file.close()
+
+def signBlock(sign_str):
+    prehashData = sign_str
+    prehash = hashlib.sha3_256(prehashData.encode()).hexdigest().encode()
+    hash = hashlib.sha3_256(prehash).hexdigest()
+    return hash
 
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,14 +36,13 @@ def serverThread():
         serversocket.bind((ip_dict.get('node3'), 5000))
     elif nodeName == 'node4':
         serversocket.bind((ip_dict.get('node4'), 5000))
-    serversocket.listen(5)  # become a server socket, maximum 5 connections
+    serversocket.listen(5)  # server socket maximum 5 connections
 
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            print(type(msg))
             print("Read [%s] from buffer" %(msg))
             print()
 
@@ -54,7 +67,7 @@ def clientThread():
         clientsocket2.connect((ip_dict.get('node2'), 5000))
         clientsocket3.connect((ip_dict.get('node3'), 5000))
 
-    newBlock = block.Block(45)
+
     p = pickle.dumps("From: %s" %(nodeName))
     clientsocket1.send(p)
     clientsocket2.send(p)
@@ -63,7 +76,7 @@ def clientThread():
 if __name__ == "__main__":
     threads = []
     nodeName = sys.argv[1]
-    ip = ''
+
     ip_dict = {
         'node1': '10.142.0.10',
         'node2': '10.142.0.11',
@@ -71,10 +84,34 @@ if __name__ == "__main__":
         'node4': '10.142.0.13',
     }
 
+    ledger_dict = {
+        'Parker': 100,
+        'Mike': 100,
+        'Jeff': 100,
+        'Bentley': 100,
+        'Alice': 100,
+        'Bob': 100
+    }
+
+    #make sure the log is clear.
+    with open('log.txt', 'w'):
+        pass
+
+    prehashData = ("Genesis Block Init DATA")
+    prehash = hashlib.sha3_256(prehashData.encode()).hexdigest().encode()
+    hash = hashlib.sha3_256(prehash).hexdigest()
+
+    init_transactions = []
+    genesisBlock = Block(0, init_transactions,
+                         datetime.datetime.now(),
+                         '0',
+                         hash)
+    blockchain = [genesisBlock]
+
     serverThread = threading.Thread(target=serverThread)
     threads.append(serverThread)
     clientThread = threading.Thread(target=clientThread)
     threads.append(clientThread)
     serverThread.start()
-    time.sleep(2)  # let the server thread have time to start
+    time.sleep(2)  # let the server thread have time to start on all nodes
     clientThread.start()

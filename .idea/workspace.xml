@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db07c69f-dbf6-42db-a18c-9c3eeb780e45" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/block.py" afterPath="$PROJECT_DIR$/block.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,10 +19,14 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="31" column="12" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+            <state relative-caret-position="818">
+              <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="73" selection-end-column="25" />
               <folding>
                 <element signature="e#49#62#0" expanded="true" />
+                <element signature="e#1520#1691#0" expanded="false" />
+                <element signature="e#1730#1901#0" expanded="false" />
+                <element signature="e#1940#2111#0" expanded="false" />
+                <element signature="e#2150#2321#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -29,8 +35,8 @@
       <file leaf-file-name="block.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/block.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state relative-caret-position="96">
+              <caret line="4" column="80" lean-forward="false" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -57,9 +63,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1436" />
+    <option name="x" value="-1400" />
     <option name="y" value="-586" />
-    <option name="width" value="1445" />
+    <option name="width" value="1409" />
     <option name="height" value="1359" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -80,7 +86,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -96,6 +101,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -219,10 +225,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1436" y="-586" width="1445" height="1359" extended-state="0" />
+    <frame x="-1400" y="-586" width="1409" height="1359" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08829713" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13874911" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26234907" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -252,10 +258,36 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="56" column="24" lean-forward="false" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
+          <folding>
+            <element signature="e#49#62#0" expanded="true" />
+            <element signature="e#1520#1691#0" expanded="false" />
+            <element signature="e#1730#1901#0" expanded="false" />
+            <element signature="e#1940#2111#0" expanded="false" />
+            <element signature="e#2150#2321#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/block.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="34" lean-forward="true" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#49#62#0" expanded="true" />
+            <element signature="e#1520#1691#0" expanded="false" />
+            <element signature="e#1730#1901#0" expanded="false" />
+            <element signature="e#1940#2111#0" expanded="false" />
+            <element signature="e#2150#2321#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -270,18 +302,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/block.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state relative-caret-position="96">
+          <caret line="4" column="80" lean-forward="false" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="80" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="31" column="12" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+        <state relative-caret-position="818">
+          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="73" selection-end-column="25" />
           <folding>
             <element signature="e#49#62#0" expanded="true" />
+            <element signature="e#1520#1691#0" expanded="false" />
+            <element signature="e#1730#1901#0" expanded="false" />
+            <element signature="e#1940#2111#0" expanded="false" />
+            <element signature="e#2150#2321#0" expanded="false" />
           </folding>
         </state>
       </provider>
