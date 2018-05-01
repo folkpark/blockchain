@@ -39,7 +39,6 @@ def getTurn():
 
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # serversocket.setblocking(0)
     if nodeName == 'node1':
         serversocket.bind((ip_dict.get('node1'), 5000))
     elif nodeName == 'node2':
@@ -110,7 +109,7 @@ def clientSendToAll(transaction):
     clientsocket3.connect((ip_dict.get('node3'), 5000))
     clientsocket4.connect((ip_dict.get('node4'), 5000))
 
-    p = pickle.dumps("transaction")
+    p = pickle.dumps(transaction)
     clientsocket1.send(p)
     clientsocket2.send(p)
     clientsocket3.send(p)
@@ -140,6 +139,7 @@ def clientThread():
         clientsocket3.connect((ip_dict.get('node3'), 5000))
 
 def printBlockchain():
+    print()
     for block in blockchain:
         print("     |     ")
         print("     |     ")
@@ -148,7 +148,7 @@ def printBlockchain():
         print("Block Transactions: %s" % (block.transactions))
         print("Block Timestamp: %s" % (block.timestamp))
         print("Block Signatures: %s" % (block.signatures))
-        print()
+    print()
 
 if __name__ == "__main__":
     threads = []
@@ -200,6 +200,7 @@ if __name__ == "__main__":
             if n is '1':
                 print()
                 transaction = createTransaction()
+                print(transaction)
                 clientSendToAll(transaction)
             elif n is '2':
                 printBlockchain()
