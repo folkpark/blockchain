@@ -53,6 +53,7 @@ def serverThread():
             if msg != "ACK":
                 print("Read [%s] from buffer" %(msg))
                 serverSendToAll("ACK")
+            else:
 
 # End Server thread
 
@@ -180,7 +181,7 @@ if __name__ == "__main__":
             if n is '1':
                 print()
                 transaction = "This a test transaction"
-                send(transaction)
+                clientSendToAll(transaction)
             elif n is '2':
                 print("Kindly print the blockchain")
             elif n is 'q':
