@@ -12,6 +12,7 @@ import sys
 import hashlib
 import pickle
 from block import Block
+import random
 
 def writeToLog(logEntry):
     file = open("log.txt", "a")
@@ -26,8 +27,12 @@ def signBlock(sign_str):
     hash = hashlib.sha3_256(prehash).hexdigest()
     return hash
 
-# def createTransaction():
-#
+def createTransaction():
+    spender = input("Who is spending?: ")
+    receiver = input("Who is receiving?: ")
+    amount = input("What is the amount?: ")
+    transaction = ("trans:%s:%s:%s" % (spender,receiver,amount))
+    return transaction
 
 def getTurn():
     return len(blockchain)%4
@@ -143,6 +148,7 @@ def printBlockchain():
         print("Block Transactions: %s" % (block.transactions))
         print("Block Timestamp: %s" % (block.timestamp))
         print("Block Signatures: %s" % (block.signatures))
+        print()
 
 if __name__ == "__main__":
     threads = []
@@ -193,7 +199,7 @@ if __name__ == "__main__":
 
             if n is '1':
                 print()
-                transaction = "This a test transaction"
+                transaction = createTransaction()
                 clientSendToAll(transaction)
             elif n is '2':
                 printBlockchain()
