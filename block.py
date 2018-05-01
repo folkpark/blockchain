@@ -6,7 +6,6 @@ class Block:
         self.blockNumber = blockNumber
         self.transactions = transactions
         self.signatures = signatures
-        self.hash = hash
         self.timestamp = timestamp
 
     def getBlockNum(self):
@@ -17,9 +16,6 @@ class Block:
 
     def getPrevHash(self):
         return self.signatures
-
-    def getHash(self):
-        return self.hash
 
     def getTimestamp(self):
         return self.timestamp

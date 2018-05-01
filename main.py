@@ -29,6 +29,9 @@ def signBlock(sign_str):
 # def createTransaction():
 #
 
+def getTurn():
+    return len(blockchain)%4
+
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # serversocket.setblocking(0)
@@ -47,16 +50,24 @@ def serverThread():
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            if msg == "ACK":
+            if msg == 'ACK':
                 print("ACK received %s" % (msg))
             else:
                 print("Read [%s] from buffer" % (msg))
                 #check if its a good transaction
-
-                serverSendToAll("ACK")
+                # if its a bad transaction do nothing
+                # if its a good transaction, create a block > sign block
+                    # a. create a block
+                    # b. sign the block
+                    # c. prepare the block for sending
+                    # d. send the block to the other nodes
+                serverSendMsgToAll("ACK")
 # End Server thread
 
-def serverSendToAll(msg):
+# def prepareBlock(block):
+#
+
+def serverSendMsgToAll(msg):
     clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientsocket3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -100,12 +111,6 @@ def clientSendToAll(transaction):
     clientsocket3.send(p)
     clientsocket4.send(p)
 
-def send(transaction):
-    clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientsocket1.connect((ip_dict.get('node1'), 5000))
-    p = pickle.dumps(transaction)
-    clientsocket1.send(p)
-
 #Client Thread
 def clientThread():
     clientsocket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -129,6 +134,15 @@ def clientThread():
         clientsocket2.connect((ip_dict.get('node2'), 5000))
         clientsocket3.connect((ip_dict.get('node3'), 5000))
 
+def printBlockchain():
+    for block in blockchain:
+        print("     |     ")
+        print("     |     ")
+        print("     V     ")
+        print("Block Number: %s" % (block.blockNumber))
+        print("Block Transactions: %s" % (block.transactions))
+        print("Block Timestamp: %s" % (block.timestamp))
+        print("Block Signatures: %s" % (block.signatures))
 
 if __name__ == "__main__":
     threads = []
@@ -168,7 +182,7 @@ if __name__ == "__main__":
         clientThread = threading.Thread(target=clientThread)
         threads.append(clientThread)
         serverThread.start()
-        time.sleep(2)  # let the server thread have time to start on all nodes
+        time.sleep(3)  # let the server thread have time to start on all nodes
         clientThread.start()
     else:
         while True:
