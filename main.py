@@ -52,7 +52,7 @@ def serverThread():
             msg = pickle.loads(buf)
             if msg != "ACK":
                 print("Read [%s] from buffer" %(msg))
-                serverSendToAll("ACK")
+                # serverSendToAll("ACK")
 # End Server thread
 
 def serverSendToAll(msg):
@@ -93,7 +93,7 @@ def clientSendToAll(transaction):
     clientsocket3.connect((ip_dict.get('node3'), 5000))
     clientsocket4.connect((ip_dict.get('node4'), 5000))
 
-    p = pickle.dumps("First From: %s" % (nodeName))
+    p = pickle.dumps("transaction")
     clientsocket1.send(p)
     clientsocket2.send(p)
     clientsocket3.send(p)
