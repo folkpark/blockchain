@@ -17,6 +17,7 @@ import time
 import datetime
 import sys
 import pickle
+import json
 from block import Block
 
 def writeToLog(logEntry):
@@ -84,24 +85,33 @@ def serverThread():
             msg = pickle.loads(buf)
             msgValues = msg.split(";")
             msgType = msgValues[0]
-            if len(msgType) > 10:
+            msg_trans_type = msgType
+            if len(msgType) > 9 and msgType != 'block':
                 msgValues = msgType.split("|")
                 msgType = msgValues[0]
-                print("NEW MSG TYPE = %s"%(msgType))
-            print("msgType = %s"%(msgType))
+
             if msgType == 'ACK':
                 print("ACK received %s" % (msg))
-            elif msgType == 'printChain':
+            elif msgType == 'prntChain':
                 printBlockchain()
+            elif msgType == 'prntLdg':
+                printLedger()
             elif msgType == 'trans':
-                print("Made it to trans!")
                 thisNodeTurn = turn_dict.get(nodeName)
                 currentTurn = getTurn()
-                print("thisNodeTurn = %s. currentTurn = %s" % (thisNodeTurn,currentTurn))
-                print(type(thisNodeTurn))
-                print(type(currentTurn))
                 if thisNodeTurn == currentTurn:
                     print("My turn to create a block!")
+                    trans_L = parseTransaction(msg_trans_type)
+                    sender = trans_L[0]
+                    receiver = trans_L[1]
+                    amount = trans_L[2]
+                    senderBal = ledger_dict.get(sender)
+                    if amount <= senderBal:
+                        print("Transaction approved")
+                        
+                    else:
+                        print("Double Spending event found. Transaction will not be processed.")
+
             else:
                 print("Read [%s] from buffer" % (msg))
                 #check if its a good transaction
@@ -198,6 +208,9 @@ def printBlockchain():
         print("     V     ")
     print()
 
+def printLedger():
+    print(json.dumps(ledger_dict, indent=1))
+
 if __name__ == "__main__":
     threads = []
     nodeName = sys.argv[1]
@@ -210,6 +223,10 @@ if __name__ == "__main__":
     }
 
     ledger_dict = {
+        'node1': 0,
+        'node2': 0,
+        'node3': 0,
+        'node4': 0,
         'Parker': 100,
         'Mike': 100,
         'Jeff': 100,
@@ -259,8 +276,8 @@ if __name__ == "__main__":
                 print(transaction)
                 clientSendToAll(transaction)
             elif n is '2':
-                clientSendToAll("printChain")
+                clientSendToAll("prntChain")
             elif n is '3':
-                print("Print Ledger")
+                clientSendToAll("prntLdg")
             elif n is 'q':
                 break
