@@ -9,10 +9,8 @@ import threading
 import time
 import datetime
 import sys
-import hashlib
 import pickle
 from block import Block
-import random
 
 def writeToLog(logEntry):
     file = open("log.txt", "a")
@@ -21,17 +19,32 @@ def writeToLog(logEntry):
     file.write(logEntry)
     file.close()
 
-def signBlock(sign_str):
-    prehashData = sign_str
-    prehash = hashlib.sha3_256(prehashData.encode()).hexdigest().encode()
-    hash = hashlib.sha3_256(prehash).hexdigest()
-    return hash
+# block strings need to be of the form:
+# "block;blockNum;trans|sender|receiver|amount;timestamp;signature1|signature2"
+def parseBlock(block_str):
+    blockValues = block_str.split(";")
+    blockNum = blockValues[1]
+
+    transaction_str = blockValues[2]
+    trans_temp = transaction_str.split("|")
+    sender = trans_temp[1]
+    receiver = trans_temp[2]
+    amount = trans_temp[3]
+    trans_L = [sender,receiver,amount]
+
+    timestamp = blockValues[3]
+
+    signatures_str = blockValues[4]
+    signatures_L = signatures_str.split("|")
+
+    newblock = Block(blockNum,trans_L,timestamp,signatures_L)
+    return newblock
 
 def createTransaction():
     spender = input("Who is spending?: ")
     receiver = input("Who is receiving?: ")
     amount = input("What is the amount?: ")
-    transaction = "trans:%s:%s:%s" % (spender,receiver,amount)
+    transaction = "trans|%s|%s|%s" % (spender,receiver,amount)
     return transaction
 
 def getTurn():
@@ -141,13 +154,15 @@ def clientThread():
 def printBlockchain():
     print()
     for block in blockchain:
-        print("     |     ")
-        print("     |     ")
-        print("     V     ")
+        print("***************************************")
         print("Block Number: %s" % (block.blockNumber))
         print("Block Transactions: %s" % (block.transactions))
         print("Block Timestamp: %s" % (block.timestamp))
         print("Block Signatures: %s" % (block.signatures))
+        print("***************************************")
+        print("     |     ")
+        print("     |     ")
+        print("     V     ")
     print()
 
 if __name__ == "__main__":
