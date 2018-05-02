@@ -136,6 +136,10 @@ def serverThread():
                     #Only add the block to the chain once
                     if prevBlock.blockNumber != newBlock.blockNumber:
                         blockchain.append(newBlock)
+                        tmpBlockString = blockToString(newBlock)
+                        writeToLog("  |  ")
+                        writeToLog("  V  ")
+                        writeToLog(tmpBlockString)
                         #Update the ledger
                         sender = newBlock.transactions[0]
                         receiver = newBlock.transactions[1]
@@ -207,6 +211,10 @@ def serverThread():
                         newBlock.signBlock(nodeName)
                         ledger_dict[nodeName] +=10 #Reward for signing block
                         blockchain.append(newBlock)
+                        tmpBlockString = blockToString(newBlock)
+                        writeToLog("  |  ")
+                        writeToLog("  V  ")
+                        writeToLog(tmpBlockString)
                         ledger_dict[sender] -= amount
                         ledger_dict[receiver] += amount
                         ledger_dict[nodeName] += 20 # Reward for creating block
@@ -368,6 +376,8 @@ if __name__ == "__main__":
                          init_signatures)
 
     blockchain = [genesisBlock]  # List to store our blockchain
+    genString = blockToString(genesisBlock)
+    writeToLog(genString)
 
     if nodeName != 'client':
         serverThread = threading.Thread(target=serverThread)
