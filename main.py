@@ -96,10 +96,22 @@ def serverThread():
     serversocket.listen(5)  # server socket maximum 5 connections
 
     global newBlock
+    nodeTurn = ''
 
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
+
+        currentTurn = getTurn()
+        if currentTurn == 0:
+            nodeTurn = 'node1'
+        elif currentTurn == 1:
+            nodeTurn = 'node2'
+        elif currentTurn == 2:
+            nodeTurn = 'node3'
+        elif currentTurn == 3:
+            nodeTurn = 'node4'
+
         if len(buf) > 0:
             msg = pickle.loads(buf)
             msgValues = msg.split(";")
@@ -142,10 +154,20 @@ def serverThread():
                 if amount <= senderBal:
                     print("Transaction approved")
                     # serverSendMsgToAll("yes")
+                    receivedBlock.signBlock(nodeName)
                     blockchain.append(receivedBlock)
                     #Update the ledger
                     ledger_dict[sender] -= amount
                     ledger_dict[receiver] += amount
+                    ledger_dict[nodeName] += 10 # reward for signing the block
+                    if nodeTurn == 'node1' and nodeName != 'node1':
+                        ledger_dict['node1'] += 30
+                    elif nodeTurn == 'node2' and nodeName != 'node2':
+                        ledger_dict['node2'] += 30
+                    elif nodeTurn == 'node3' and nodeName != 'node3':
+                        ledger_dict['node3'] += 30
+                    elif nodeTurn == 'node4' and nodeName != 'node4':
+                        ledger_dict['node4'] += 30
                 else:
                     print("Double spending found. Voting NO")
                     serverSendMsgToAll("no")
@@ -157,7 +179,7 @@ def serverThread():
                     print("My turn to create a block!")
                     trans_L = parseTransaction(msg_trans_type)
                     sender = trans_L[0]
-                    #receiver = trans_L[1]
+                    receiver = trans_L[1]
                     amount = trans_L[2]
                     amount = int(amount)
                     senderBal = ledger_dict.get(sender)
@@ -175,7 +197,11 @@ def serverThread():
                         tempBlockList = [newBlock]
                         #Sign the block
                         newBlock.signBlock(nodeName)
+                        ledger_dict[nodeName] +=10 #Reward for signing block
                         blockchain.append(newBlock)
+                        ledger_dict[sender] -= amount
+                        ledger_dict[receiver] += amount
+                        ledger_dict[nodeName] += 20 # Reward for creating block
                         blockString = blockToString(newBlock)
                         print(blockString)
                         serverSendMsgToAll(blockString)
