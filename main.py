@@ -20,6 +20,7 @@ import pickle
 import json
 from block import Block
 
+
 def writeToLog(logEntry):
     file = open("log.txt", "a")
     #write the log out to a file
@@ -94,6 +95,7 @@ def serverThread():
         serversocket.bind((ip_dict.get('node4'), 5000))
     serversocket.listen(5)  # server socket maximum 5 connections
 
+
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
@@ -112,6 +114,36 @@ def serverThread():
                 printBlockchain()
             elif msgType == 'prntLdg':
                 printLedger()
+            elif msgType == 'yes': #block was accepted
+                prevBlock = blockchain[-1]
+                #Only add the block to the chain once
+                if prevBlock.blockNumber != newBlock.blockNumber:
+                    blockchain.append(newBlock)
+                    #Update the ledger
+                    sender = newBlock.transactions[0]
+                    receiver = newBlock.transactions[1]
+                    amount = newBlock.transactions[2]
+                    ledger_dict[sender] -= amount
+                    ledger_dict[receiver] += amount
+
+            elif msgType == 'block':
+                receivedBlock = parseBlock(msg)
+                #check the block for double spending
+                sender = receivedBlock.transactions[0]
+                receiver = receivedBlock.transactions[1]
+                amount = receivedBlock.transactions[2]
+                senderBal = ledger_dict.get(sender)
+                if amount <= senderBal:
+                    print("Transaction approved")
+                    serverSendMsgToAll("yes")
+                    blockchain.append(receivedBlock)
+                    #Update the ledger
+                    ledger_dict[sender] -= amount
+                    ledger_dict[receiver] += amount
+                else:
+                    print("Double spending found. Voting NO")
+                    serverSendMsgToAll("no")
+
             elif msgType == 'trans':
                 thisNodeTurn = turn_dict.get(nodeName)
                 currentTurn = getTurn()
@@ -129,6 +161,7 @@ def serverThread():
                         previousBlock = blockchain[-1]
                         newBlockNumber = previousBlock.blockNumber+1
                         signatures = []
+                        global newBlock
                         newBlock = Block(newBlockNumber,
                                          trans_L,
                                          datetime.datetime.now(),
@@ -137,7 +170,7 @@ def serverThread():
                         newBlock.signBlock(nodeName)
                         blockString = blockToString(newBlock)
                         print(blockString)
-                        blockchain.append(newBlock)
+                        serverSendMsgToAll(blockString)
                     else:
                         print("Double Spending event found. Transaction will not be processed.")
 
