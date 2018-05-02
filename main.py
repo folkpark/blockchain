@@ -116,19 +116,20 @@ def serverThread():
             elif msgType == 'prntLdg':
                 printLedger()
             elif msgType == 'yes': #block was accepted
-                prevBlock = blockchain[-1]
-                #Only add the block to the chain once
-                newBlock = tempBlockList[0]
-                if prevBlock.blockNumber != newBlock.blockNumber:
-                    blockchain.append(newBlock)
-                    #Update the ledger
-                    sender = newBlock.transactions[0]
-                    receiver = newBlock.transactions[1]
-                    amount = newBlock.transactions[2]
-                    amount = int(amount)
-                    ledger_dict[sender] -= amount
-                    ledger_dict[receiver] += amount
-                    tempBlockList.clear()
+                thisNodeTurn = turn_dict.get(nodeName)
+                currentTurn = getTurn()
+                if thisNodeTurn == currentTurn:
+                    prevBlock = blockchain[-1]
+                    #Only add the block to the chain once
+                    if prevBlock.blockNumber != newBlock.blockNumber:
+                        blockchain.append(newBlock)
+                        #Update the ledger
+                        sender = newBlock.transactions[0]
+                        receiver = newBlock.transactions[1]
+                        amount = newBlock.transactions[2]
+                        amount = int(amount)
+                        ledger_dict[sender] -= amount
+                        ledger_dict[receiver] += amount
 
             elif msgType == 'block':
                 receivedBlock = parseBlock(msg)
@@ -148,7 +149,6 @@ def serverThread():
                 else:
                     print("Double spending found. Voting NO")
                     serverSendMsgToAll("no")
-                tempBlockList.clear()
 
             elif msgType == 'trans':
                 thisNodeTurn = turn_dict.get(nodeName)
@@ -325,8 +325,6 @@ if __name__ == "__main__":
                          init_signatures)
 
     blockchain = [genesisBlock]  # List to store our blockchain
-
-    tempBlockList = []
 
     if nodeName != 'client':
         serverThread = threading.Thread(target=serverThread)
