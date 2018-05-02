@@ -197,16 +197,20 @@ def clientThread():
 
 def printBlockchain():
     print()
+    count = 0
+    blockchain_length = len(blockchain)
     for block in blockchain:
+        count += 1
         print("***************************************")
         print("Block Number: %s" % (block.blockNumber))
         print("Block Transactions: %s" % (block.transactions))
         print("Block Timestamp: %s" % (block.timestamp))
         print("Block Signatures: %s" % (block.signatures))
         print("***************************************")
-        print("     |     ")
-        print("     |     ")
-        print("     V     ")
+        if count != blockchain_length:
+            print("     |     ")
+            print("     |     ")
+            print("     V     ")
     print()
 
 def printLedger():
