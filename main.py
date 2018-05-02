@@ -165,7 +165,8 @@ def serverThread():
                         print("Transaction approved")
                         #create a block
                         previousBlock = blockchain[-1]
-                        newBlockNumber = previousBlock.blockNumber+1
+                        tmpBlockNum = int(previousBlock.blockNumber)
+                        newBlockNumber = tmpBlockNum+1
                         signatures = []
                         newBlock = Block(newBlockNumber,
                                          trans_L,
