@@ -137,6 +137,7 @@ def serverThread():
                         newBlock.signBlock(nodeName)
                         blockString = blockToString(newBlock)
                         print(blockString)
+                        blockchain.append(newBlock)
                     else:
                         print("Double Spending event found. Transaction will not be processed.")
 
