@@ -84,6 +84,10 @@ def serverThread():
             msg = pickle.loads(buf)
             msgValues = msg.split(";")
             msgType = msgValues[0]
+            if len(msgType) > 10:
+                msgValues = msgType.split("|")
+                msgType = msgValues[0]
+                print("NEW MSG TYPE = %s"%(msgType))
             print("msgType = %s"%(msgType))
             if msgType == 'ACK':
                 print("ACK received %s" % (msg))
