@@ -141,7 +141,7 @@ def serverThread():
                 senderBal = ledger_dict.get(sender)
                 if amount <= senderBal:
                     print("Transaction approved")
-                    serverSendMsgToAll("yes")
+                    # serverSendMsgToAll("yes")
                     blockchain.append(receivedBlock)
                     #Update the ledger
                     ledger_dict[sender] -= amount
@@ -174,6 +174,7 @@ def serverThread():
                         tempBlockList = [newBlock]
                         #Sign the block
                         newBlock.signBlock(nodeName)
+                        blockchain.append(newBlock)
                         blockString = blockToString(newBlock)
                         print(blockString)
                         serverSendMsgToAll(blockString)
