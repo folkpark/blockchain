@@ -66,6 +66,22 @@ def createTransaction():
 def getTurn():
     return len(blockchain)%4
 
+def blockToString(block):
+    blockNum = block.blockNumber
+    timestamp = block.timestamp
+    trans_L = block.transactions
+    trans_str = "trans|%s|%s|%s"%(trans_L[0],trans_L[1],trans_L[2])
+    sigs_L = block.signatures
+    sigs_str = ''
+    count = 0
+    for sig in sigs_L:
+        count +=1
+        sigs_str = sigs_str+sig
+        if count != len(sigs_L):
+            sigs_str = sigs_str+"|"
+    blockString = "block;%s;%s;%s;%s"%(blockNum,trans_str,timestamp,sigs_str)
+    return blockString
+
 def serverThread():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if nodeName == 'node1':
@@ -103,13 +119,24 @@ def serverThread():
                     print("My turn to create a block!")
                     trans_L = parseTransaction(msg_trans_type)
                     sender = trans_L[0]
-                    receiver = trans_L[1]
+                    #receiver = trans_L[1]
                     amount = trans_L[2]
                     amount = int(amount)
                     senderBal = ledger_dict.get(sender)
                     if amount <= senderBal:
                         print("Transaction approved")
-
+                        #create a block
+                        previousBlock = blockchain[-1]
+                        newBlockNumber = previousBlock.blockNumber+1
+                        signatures = []
+                        newBlock = Block(newBlockNumber,
+                                         trans_L,
+                                         datetime.datetime.now(),
+                                         signatures)
+                        #Sign the block
+                        newBlock.signBlock(nodeName)
+                        blockString = blockToString(newBlock)
+                        print(blockString)
                     else:
                         print("Double Spending event found. Transaction will not be processed.")
 
@@ -257,7 +284,7 @@ if __name__ == "__main__":
                          datetime.datetime.now(),
                          init_signatures)
 
-    blockchain = [genesisBlock, genesisBlock]  # List to store our blockchain
+    blockchain = [genesisBlock]  # List to store our blockchain
 
     if nodeName != 'client':
         serverThread = threading.Thread(target=serverThread)

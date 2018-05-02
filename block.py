@@ -13,15 +13,3 @@ class Block:
         prehash = hashlib.sha3_256(prehashData.encode()).hexdigest().encode()
         hash_signature = hashlib.sha3_256(prehash).hexdigest()
         self.signatures.append(hash_signature)
-
-    def getBlockNum(self):
-        return self.blockNumber
-
-    def getTransactions(self):
-        return self.transactions
-
-    def getPrevHash(self):
-        return self.signatures
-
-    def getTimestamp(self):
-        return self.timestamp
