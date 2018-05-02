@@ -89,8 +89,12 @@ def serverThread():
             elif msgType == 'printChain':
                 printBlockchain()
             elif msgType == 'trans':
+                print("Made it to trans!")
                 thisNodeTurn = turn_dict.get(nodeName)
                 currentTurn = getTurn()
+                print("thisNodeTurn = %s. currentTurn = %s" % (thisNodeTurn,currentTurn))
+                print(type(thisNodeTurn))
+                print(type(currentTurn))
                 if thisNodeTurn == currentTurn:
                     print("My turn to create a block!")
             else:
