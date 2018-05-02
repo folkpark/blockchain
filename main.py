@@ -133,6 +133,7 @@ def serverThread():
                 sender = receivedBlock.transactions[0]
                 receiver = receivedBlock.transactions[1]
                 amount = receivedBlock.transactions[2]
+                amount = int(amount)
                 senderBal = ledger_dict.get(sender)
                 if amount <= senderBal:
                     print("Transaction approved")
