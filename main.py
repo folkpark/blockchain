@@ -88,6 +88,11 @@ def serverThread():
                 print("ACK received %s" % (msg))
             elif msgType == 'printChain':
                 printBlockchain()
+            elif msgType == 'trans':
+                thisNodeTurn = turn_dict.get(nodeName)
+                currentTurn = getTurn()
+                if thisNodeTurn == currentTurn:
+                    print("My turn to create a block!")
             else:
                 print("Read [%s] from buffer" % (msg))
                 #check if its a good transaction
@@ -204,6 +209,13 @@ if __name__ == "__main__":
         'Bob': 100
     }
 
+    turn_dict = {
+        'node1': 0,
+        'node2': 1,
+        'node3': 2,
+        'node4': 3
+    }
+
     #make sure the log is clear.
     with open('log.txt', 'w'):
         pass
@@ -229,6 +241,7 @@ if __name__ == "__main__":
             print("Enter integer selection (q to quit)")
             print("Create Transaction 1:")
             print("View Blockchain 2:")
+            print("View Ledger 3: ")
             n = input("Please enter selection: ")
 
             if n is '1':
@@ -238,5 +251,7 @@ if __name__ == "__main__":
                 clientSendToAll(transaction)
             elif n is '2':
                 clientSendToAll("printChain")
+            elif n is '3':
+                print("Print Ledger")
             elif n is 'q':
                 break
