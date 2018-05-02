@@ -376,8 +376,8 @@ if __name__ == "__main__":
                          init_signatures)
 
     blockchain = [genesisBlock]  # List to store our blockchain
-    genString = blockToString(genesisBlock)
-    writeToLog(genString)
+    timestamp = datetime.datetime.now()
+    writeToLog("GENESIS BLOCK:0:[]:%s:[]"%(timestamp))
 
     if nodeName != 'client':
         serverThread = threading.Thread(target=serverThread)
