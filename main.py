@@ -167,7 +167,7 @@ def serverThread():
                         print("Transaction looks good, but I dont have enough stake.")
                         print("I will wait for the block to be sent back to me. ")
                     blockchain.append(receivedBlock)
-                    tmpBlockString = blockToString(newBlock)
+                    tmpBlockString = blockToString(receivedBlock)
                     writeToLog("  |  ")
                     writeToLog("  V  ")
                     writeToLog(tmpBlockString)
