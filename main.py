@@ -64,8 +64,37 @@ def createTransaction():
     transaction = "trans|%s|%s|%s" % (spender,receiver,amount)
     return transaction
 
-def getTurn():
-    return len(blockchain)%4
+# return a value from 0-3 designating which node will create next block
+def getTurn(amount):
+    currentTurn = -1
+    length = len(blockchain) # length of the blockchain
+    modValue_int = length%4
+    nodeTurn = ''
+
+    if modValue_int == 0:
+        nodeTurn = 'node1'
+    elif modValue_int == 1:
+        nodeTurn = 'node2'
+    elif modValue_int == 2:
+        nodeTurn = 'node3'
+    elif modValue_int == 3:
+        nodeTurn = 'node4'
+
+    nodeStake = stake_dict.get(nodeTurn)
+
+    while(amount > nodeStake):
+        length += 1
+        modValue_int = length % 4
+        if modValue_int == 0:
+            nodeTurn = 'node1'
+        elif modValue_int == 1:
+            nodeTurn = 'node2'
+        elif modValue_int == 2:
+            nodeTurn = 'node3'
+        elif modValue_int == 3:
+            nodeTurn = 'node4'
+        nodeStake = stake_dict.get(nodeTurn)
+    return modValue_int
 
 def blockToString(block):
     blockNum = block.blockNumber
@@ -173,16 +202,17 @@ def serverThread():
                     serverSendMsgToAll("no")
 
             elif msgType == 'trans':
+                trans_L = parseTransaction(msg_trans_type)
+                sender = trans_L[0]
+                receiver = trans_L[1]
+                amount = trans_L[2]
+                amount = int(amount)
+                senderBal = ledger_dict.get(sender)
+
                 thisNodeTurn = turn_dict.get(nodeName)
-                currentTurn = getTurn()
+                currentTurn = getTurn(amount)
                 if thisNodeTurn == currentTurn:
                     print("My turn to create a block!")
-                    trans_L = parseTransaction(msg_trans_type)
-                    sender = trans_L[0]
-                    receiver = trans_L[1]
-                    amount = trans_L[2]
-                    amount = int(amount)
-                    senderBal = ledger_dict.get(sender)
                     if amount <= senderBal:
                         print("Transaction approved")
                         #create a block
@@ -333,6 +363,13 @@ if __name__ == "__main__":
         'Bentley': 100,
         'Alice': 100,
         'Bob': 100
+    }
+
+    stake_dict = {
+        'node1': 10,
+        'node2': 20,
+        'node3': 50,
+        'node4': 80
     }
 
     turn_dict = {
