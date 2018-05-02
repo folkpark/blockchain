@@ -82,8 +82,12 @@ def serverThread():
         buf = connection.recv(4096)
         if len(buf) > 0:
             msg = pickle.loads(buf)
-            if msg == 'ACK':
+            msgValues = msg.split(";")
+            msgType = msgValues[0]
+            if msgType == 'ACK':
                 print("ACK received %s" % (msg))
+            elif msgType == 'printChain':
+                printBlockchain()
             else:
                 print("Read [%s] from buffer" % (msg))
                 #check if its a good transaction
@@ -233,6 +237,6 @@ if __name__ == "__main__":
                 print(transaction)
                 clientSendToAll(transaction)
             elif n is '2':
-                printBlockchain()
+                clientSendToAll("printChain")
             elif n is 'q':
                 break
