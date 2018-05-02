@@ -65,36 +65,8 @@ def createTransaction():
     return transaction
 
 # return a value from 0-3 designating which node will create next block
-def getTurn(amount):
-    currentTurn = -1
-    length = len(blockchain) # length of the blockchain
-    modValue_int = length%4
-    nodeTurn = ''
-
-    if modValue_int == 0:
-        nodeTurn = 'node1'
-    elif modValue_int == 1:
-        nodeTurn = 'node2'
-    elif modValue_int == 2:
-        nodeTurn = 'node3'
-    elif modValue_int == 3:
-        nodeTurn = 'node4'
-
-    nodeStake = stake_dict.get(nodeTurn)
-
-    while(amount > nodeStake):
-        length += 1
-        modValue_int = length % 4
-        if modValue_int == 0:
-            nodeTurn = 'node1'
-        elif modValue_int == 1:
-            nodeTurn = 'node2'
-        elif modValue_int == 2:
-            nodeTurn = 'node3'
-        elif modValue_int == 3:
-            nodeTurn = 'node4'
-        nodeStake = stake_dict.get(nodeTurn)
-    return modValue_int
+def getTurn():
+    return len(blockchain)%4
 
 def blockToString(block):
     blockNum = block.blockNumber
@@ -124,14 +96,14 @@ def serverThread():
         serversocket.bind((ip_dict.get('node4'), 5000))
     serversocket.listen(5)  # server socket maximum 5 connections
 
-
+    global newBlock
     nodeTurn = ''
 
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
 
-        # currentTurn = getTurn()
+        currentTurn = getTurn()
         if currentTurn == 0:
             nodeTurn = 'node1'
         elif currentTurn == 1:
@@ -158,7 +130,7 @@ def serverThread():
                 printLedger()
             elif msgType == 'yes': #block was accepted
                 thisNodeTurn = turn_dict.get(nodeName)
-                # currentTurn = getTurn()
+                currentTurn = getTurn()
                 if thisNodeTurn == currentTurn:
                     prevBlock = blockchain[-1]
                     #Only add the block to the chain once
@@ -210,7 +182,7 @@ def serverThread():
                 senderBal = ledger_dict.get(sender)
 
                 thisNodeTurn = turn_dict.get(nodeName)
-                currentTurn = getTurn(amount)
+                currentTurn = getTurn()
                 if thisNodeTurn == currentTurn:
                     print("My turn to create a block!")
                     if amount <= senderBal:
@@ -344,8 +316,6 @@ def printLedger():
 if __name__ == "__main__":
     threads = []
     nodeName = sys.argv[1]
-    global currentTurn
-    currentTurn = -1
 
     ip_dict = {
         'node1': '10.142.0.10',
