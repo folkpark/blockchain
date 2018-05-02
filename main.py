@@ -257,7 +257,7 @@ if __name__ == "__main__":
                          datetime.datetime.now(),
                          init_signatures)
 
-    blockchain = [genesisBlock]  # List to store our blockchain
+    blockchain = [genesisBlock, genesisBlock]  # List to store our blockchain
 
     if nodeName != 'client':
         serverThread = threading.Thread(target=serverThread)
