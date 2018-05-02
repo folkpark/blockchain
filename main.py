@@ -1,6 +1,13 @@
 '''
 Author: Parker Folkman
 Date: 4/24/2018
+Overview: This is a Modified Proof of Stake blockchain that resolves
+the lazy miner problem as well as the rich get richer problem. This code
+was written as a programming assignment in CSCI 520 Distributed Systems at 
+Montana State University. This code is free for anyone to use at your discretion. This software comes
+As-Is with no warranties guaranteed or implied. 
+
+Please see the Readme for the assignment prompt for the specifications that this code addresses. 
 
 '''
 
@@ -39,6 +46,14 @@ def parseBlock(block_str):
 
     newblock = Block(blockNum,trans_L,timestamp,signatures_L)
     return newblock
+
+def parseTransaction(transaction_str):
+    values = transaction_str.split("|")
+    sender = values[1]
+    receiver = values[2]
+    amount = values[3]
+    transaction_L = [sender,receiver,amount]
+    return transaction_L
 
 def createTransaction():
     spender = input("Who is spending?: ")
