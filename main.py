@@ -124,14 +124,14 @@ def serverThread():
         serversocket.bind((ip_dict.get('node4'), 5000))
     serversocket.listen(5)  # server socket maximum 5 connections
 
-    global newBlock
+
     nodeTurn = ''
 
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(4096)
 
-        currentTurn = getTurn()
+        # currentTurn = getTurn()
         if currentTurn == 0:
             nodeTurn = 'node1'
         elif currentTurn == 1:
@@ -158,7 +158,7 @@ def serverThread():
                 printLedger()
             elif msgType == 'yes': #block was accepted
                 thisNodeTurn = turn_dict.get(nodeName)
-                currentTurn = getTurn()
+                # currentTurn = getTurn()
                 if thisNodeTurn == currentTurn:
                     prevBlock = blockchain[-1]
                     #Only add the block to the chain once
@@ -344,6 +344,8 @@ def printLedger():
 if __name__ == "__main__":
     threads = []
     nodeName = sys.argv[1]
+    global currentTurn
+    currentTurn = -1
 
     ip_dict = {
         'node1': '10.142.0.10',
