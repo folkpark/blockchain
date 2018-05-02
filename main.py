@@ -105,10 +105,11 @@ def serverThread():
                     sender = trans_L[0]
                     receiver = trans_L[1]
                     amount = trans_L[2]
+                    amount = int(amount)
                     senderBal = ledger_dict.get(sender)
                     if amount <= senderBal:
                         print("Transaction approved")
-                        
+
                     else:
                         print("Double Spending event found. Transaction will not be processed.")
 
