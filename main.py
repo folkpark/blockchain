@@ -159,7 +159,7 @@ def serverThread():
                     #Update the ledger
                     ledger_dict[sender] -= amount
                     ledger_dict[receiver] += amount
-                    ledger_dict[nodeName] += 10 # reward for signing the block
+                    #ledger_dict[nodeName] += 10 # reward for signing the block
                     if nodeTurn == 'node1' and nodeName != 'node1':
                         ledger_dict['node1'] += 30
                     elif nodeTurn == 'node2' and nodeName != 'node2':
@@ -364,6 +364,7 @@ if __name__ == "__main__":
         clientThread.start()
     else:
         while True:
+            print()
             print("Enter integer selection (q to quit)")
             print("Create Transaction 1:")
             print("View Blockchain 2:")
