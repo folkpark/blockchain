@@ -95,6 +95,7 @@ def serverThread():
         serversocket.bind((ip_dict.get('node4'), 5000))
     serversocket.listen(5)  # server socket maximum 5 connections
 
+    global newBlock
 
     while True:
         connection, address = serversocket.accept()
@@ -161,7 +162,6 @@ def serverThread():
                         previousBlock = blockchain[-1]
                         newBlockNumber = previousBlock.blockNumber+1
                         signatures = []
-                        global newBlock
                         newBlock = Block(newBlockNumber,
                                          trans_L,
                                          datetime.datetime.now(),
