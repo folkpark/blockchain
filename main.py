@@ -153,9 +153,15 @@ def serverThread():
                 amount = int(amount)
                 senderBal = ledger_dict.get(sender)
                 if amount <= senderBal:
-                    print("Transaction approved")
                     # serverSendMsgToAll("yes")
-                    receivedBlock.signBlock(nodeName)
+                    myStake = stake_dict.get(nodeName)
+                    myStake = int(myStake)
+                    if amount < myStake:
+                        print("Transaction approved with adequate stake")
+                        receivedBlock.signBlock(nodeName)
+                    else:
+                        print("Transaction looks good, but I dont have enough stake.")
+                        print("I will wait for the block to be sent back to me. ")
                     blockchain.append(receivedBlock)
                     #Update the ledger
                     ledger_dict[sender] -= amount
